@@ -1,5 +1,7 @@
 package org.nick.java;
 
+import org.nick.java.dao.ToDo;
+import org.nick.java.services.ToDoService;
 import org.nick.java.services.UserAuthenticationService;
 
 import javax.servlet.ServletException;
@@ -9,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/login.do")
 public class LoginServlet extends HttpServlet {
+
+    private ToDoService toDoService = new ToDoService();
 
     //get the login page
     protected void doGet(HttpServletRequest request, HttpServletResponse response){
@@ -30,7 +35,9 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         if(UserAuthenticationService.isUserValid(username,password)){
             try {
-                request.setAttribute("name", username);
+                request.getSession().setAttribute("name", username);
+                List<ToDo> toDoList = toDoService.retrieveToDos(username);
+                request.setAttribute("todolist",toDoList);
                 request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
             } catch (ServletException e) {
                 e.printStackTrace();
