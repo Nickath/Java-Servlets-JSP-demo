@@ -1,9 +1,6 @@
 package org.nick.java.dao;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -14,13 +11,20 @@ public class User implements Serializable {
     @GeneratedValue
     private long id;
 
+    @Column(unique = true)
     private String username;
+
     private String password;
 
 
     public User(long id, String username) {
         this.id = id;
         this.username = username;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public User(long id){

@@ -51,6 +51,7 @@ public class ToDoService {
             tx = session.getTransaction();
             tx.begin();
             ToDo toDo = new ToDo(description,userId);
+            System.out.println(toDo.toString() + " will be saved ");
             session.save(toDo);
             tx.commit();
         }
@@ -61,5 +62,23 @@ public class ToDoService {
             session.close();
         }
 
+    }
+
+    public void deleteToDo(String description, long userId){
+        Session session = HibernateUtil.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.getTransaction();
+            tx.begin();
+            Query query = session.createQuery("delete FROM ToDo where description='"+description+"' AND user_id='"+userId+"'");
+            query.executeUpdate();
+            tx.commit();
+        }
+        catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 }

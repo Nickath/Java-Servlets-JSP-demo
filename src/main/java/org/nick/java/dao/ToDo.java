@@ -51,4 +51,13 @@ public class ToDo {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "ToDo{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

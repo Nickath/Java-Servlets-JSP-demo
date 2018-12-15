@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         if(UserAuthenticationService.isUserValid(username,password)){
             try {
-                request.getSession().setAttribute("name", username);
+                request.getSession().setAttribute("username", username);
                 List<ToDo> toDoList = toDoService.retrieveToDos(username);
                 request.setAttribute("todolist",toDoList);
                 request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);

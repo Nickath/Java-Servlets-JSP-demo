@@ -20,5 +20,6 @@
 
     </form>
     <p><font color="red"> ${errorMsg}</font> </p>
+    <p>Don't you have an account? <a href="/TestApp/register.do">register here</a> </p>
 </body>
 </html>
