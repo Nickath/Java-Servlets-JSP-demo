@@ -36,11 +36,7 @@ public class LoginServlet extends HttpServlet {
         if(UserAuthenticationService.isUserValid(username,password)){
             try {
                 request.getSession().setAttribute("username", username);
-                List<ToDo> toDoList = toDoService.retrieveToDos(username);
-                request.setAttribute("todolist",toDoList);
-                request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
-            } catch (ServletException e) {
-                e.printStackTrace();
+                response.sendRedirect("/TestApp/home.do");
             } catch (IOException e) {
                 e.printStackTrace();
             }

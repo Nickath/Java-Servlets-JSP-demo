@@ -22,16 +22,19 @@ public class ToDoServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
           String description = request.getParameter("todo");
+          if(description == "" || description == null){
+              try {
+                  response.sendRedirect("/TestApp/home.do");
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
           System.out.println((String)request.getSession().getAttribute("username"));
           User user = UserAuthenticationService.getUserByUsername((String)request.getSession().getAttribute("username"));
           System.out.println(user.getId() +" is the id ");
           toDoService.addTodo(description, user.getId());
-          List<ToDo> toDoList = toDoService.retrieveToDos((String)request.getSession().getAttribute("username"));
-          request.setAttribute("todolist",toDoList);
         try {
-            request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
+            response.sendRedirect("/TestApp/home.do");
         } catch (IOException e) {
             e.printStackTrace();
         }

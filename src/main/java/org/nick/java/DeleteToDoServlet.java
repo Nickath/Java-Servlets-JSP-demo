@@ -24,8 +24,6 @@ public class DeleteToDoServlet extends HttpServlet {
         String descriptionToBeDeleted = req.getParameter("description");
         User user = UserAuthenticationService.getUserByUsername((String)req.getSession().getAttribute("username"));
         toDoService.deleteToDo(descriptionToBeDeleted,user.getId());
-        List<ToDo> toDoList = toDoService.retrieveToDos((String)req.getSession().getAttribute("username"));
-        req.setAttribute("todolist",toDoList);
-        req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+        resp.sendRedirect("/TestApp/home.do");
     }
 }
